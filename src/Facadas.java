@@ -9,18 +9,18 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+import dao.Conector;
+
 public class Facadas
 {
 
-    public Facadas()
-    {
-    }
 
     public static boolean contem(List<matadores> mt, matadores mt2)
     {
@@ -48,8 +48,15 @@ public class Facadas
         return -1;
     }
 
-    public static void main(String args[])
+    public static void main(String args[]) throws SQLException
     {
+    	Conector conector = new Conector();
+    	try {
+			conector.ConexaoBD();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
         String dir = args[0];
         File diretorio = new File(dir);
         File fList[] = diretorio.listFiles();
@@ -77,6 +84,10 @@ public class Facadas
                         matadores killer = new matadores();
                         killer.setMatador(matador.trim());
                         killer.setVitima(vitima.trim());
+                        java.sql.PreparedStatement ps = Conector.ConexaoBD().prepareStatement("INSERT INTO jogadas (esfaqueador,vitima) VALUES (?,?)");
+                        ps.setString(1, matador);
+                        ps.setString(2, vitima);
+                        ps.execute();
                         if(contem(facadas, killer))
                         {
                             int index = indice(facadas, killer);
