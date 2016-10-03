@@ -10,10 +10,15 @@ import javax.swing.JOptionPane;
 public class Conector {
 	
 	public Statement stm;
-	//private String driver;
-	static String url = "jdbc:mysql://localhost/CS";
-	static String usuario = "root";
-	static String senha = "";
+	 //private String driver;
+//	static String url = "jdbc:mysql://localhost/CS";
+//	static String usuario = "root";
+//	static String senha = "";
+	static String serverName = "server36.000webhost.com";
+	static String mydatabase = "a8058527_cs";
+	static String url = "jdbc:mysql://" + serverName + "/" + mydatabase;
+	static String usuario = "a8058527_rol";
+	static String senha = "Rol1979";
 	static Connection con;
 	
 	public static Connection ConexaoBD() throws SQLException {

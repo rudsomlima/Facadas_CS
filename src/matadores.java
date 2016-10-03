@@ -7,14 +7,33 @@
 class matadores
 {
 
-    matadores()
-    {
+   
+	matadores()
+    {	
+    	dia = null;
+    	hora = null;
         matador = null;
         vitima = null;
         quantidade = 0;
     }
 
-    public String getMatador()
+    public String getDia() {
+		return dia;
+	}
+
+	public void setDia(String dia) {
+		this.dia = dia;
+	}
+
+	public String getHora() {
+		return hora;
+	}
+
+	public void setHora(String hora) {
+		this.hora = hora;
+	}
+
+	public String getMatador()
     {
         return matador;
     }
@@ -44,6 +63,8 @@ class matadores
         this.quantidade = quantidade;
     }
 
+    String dia;
+    String hora;
     String matador;
     String vitima;
     int quantidade;

@@ -78,15 +78,20 @@ public class Facadas
                     String linha = br.readLine();
                     if(linha.contains("with \"knife\""))
                     {
+                    	String dia = linha.substring(2,12);
+                    	String hora = linha.substring(15,23);             	
                         String matador = linha.substring(linha.indexOf("\"") + 1, linha.indexOf("<"));
                         String subLinha = linha.substring(linha.indexOf("killed \""));
                         String vitima = subLinha.substring(subLinha.indexOf("\"") + 1, subLinha.indexOf("<"));
                         matadores killer = new matadores();
                         killer.setMatador(matador.trim());
                         killer.setVitima(vitima.trim());
-                        java.sql.PreparedStatement ps = Conector.ConexaoBD().prepareStatement("INSERT INTO jogadas (esfaqueador,vitima) VALUES (?,?)");
+                        java.sql.PreparedStatement ps = Conector.ConexaoBD().prepareStatement("INSERT INTO jogadas (esfaqueador,vitima,dia,hora) VALUES (?,?,STR_TO_DATE(?,'%m/%d/%Y'),?)");
+                        //SELECT COUNT(esfaqueador) FROM `jogadas` WHERE `esfaqueador` LIKE '@%' AND `vitima` LIKE 'Smolder' AND `dia` BETWEEN '2016-09-01' AND '2016-10-03'
                         ps.setString(1, matador);
                         ps.setString(2, vitima);
+                        ps.setString(3, dia);
+                        ps.setString(4, hora);
                         ps.execute();
                         if(contem(facadas, killer))
                         {
@@ -101,6 +106,7 @@ public class Facadas
                 }
                 if(br != null)
                     br.close();
+                Conector.Desconecta();
             }
 
             Collections.sort(facadas, new Comparator<Object>() {
